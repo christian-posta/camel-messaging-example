@@ -9,7 +9,7 @@
     <camelContext xmlns="http://camel.apache.org/schema/blueprint">
 
         <packageScan>
-            <package>org.apache.camel.examples</package>
+            <package>org.apache.camel.examples.routes</package>
         </packageScan>
 
     </camelContext>

@@ -14,7 +14,7 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.examples;
+package org.apache.camel.examples.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 
@@ -25,7 +25,7 @@ public class SjmsRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("sjms:topic:beer.lager")
-                .routeId("org.apache.camel.examples.SjmsRouteBuilder.lagerConsumer")
+                .routeId("org.apache.camel.examples.routes.SjmsRouteBuilder.lagerConsumer")
                 .log("we just received a lager on the Simple JMS endpoint!!");
     }
 }

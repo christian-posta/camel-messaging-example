@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.examples;
+package org.apache.camel.examples.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
-public class AmqpRouteBuilder extends RouteBuilder {
+public class StompRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("amqp:queue:beer.ipa")
-                .routeId("org.apache.camel.examples.AmqpRouteBuilder.lagerConsumer")
-                .log("we got an IPA on the AMQP endpoint! I'm gonna drink it!");
+        from("stomp:topic:beer.lager?brokerURL=tcp://localhost:61613")
+                .routeId("org.apache.camel.examples.routes.StompRouteBuilder.lagerConsumer")
+                .log("we just received a lager on the STOMP endpoint");
     }
 }

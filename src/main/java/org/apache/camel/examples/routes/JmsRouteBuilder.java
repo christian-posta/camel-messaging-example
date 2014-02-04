@@ -14,18 +14,26 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.examples;
+package org.apache.camel.examples.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
-public class MqttRouteBuilder extends RouteBuilder {
+public class JmsRouteBuilder extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
-        from("mqtt:beer?host=tcp://localhost:1883&subscribeTopicName=beer.lager")
-                .routeId("org.apache.camel.examples.MqttRouteBuilder.lagetConsumer")
-                .log("got a lager on the mqtt endpoint! whoohoo");
+
+        from("timer:jmsTimer?period=5000")
+                .routeId("org.apache.camel.examples.routes.JmsRouteBuilder.producer")
+                .setBody(constant("camel rocks jms!"))
+                .to("jms:topic:beer.lager").to("jms:queue:beer.ipa");
+
+
+        from("jms:topic:beer.lager")
+                .routeId("org.apache.camel.examples.routes.JmsRouteBuilder.lagerConsumer")
+                .log("we just received a lager on the JMS endpoint");
     }
 }

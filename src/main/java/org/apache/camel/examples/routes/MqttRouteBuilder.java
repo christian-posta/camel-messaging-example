@@ -14,18 +14,18 @@
  * See the License for the specific language governing permissions and
  * limitations under the License.
  */
-package org.apache.camel.examples;
+package org.apache.camel.examples.routes;
 
 import org.apache.camel.builder.RouteBuilder;
 
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
-public class StompRouteBuilder extends RouteBuilder {
+public class MqttRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-        from("stomp:topic:beer.lager?brokerURL=tcp://localhost:61613")
-                .routeId("org.apache.camel.examples.StompRouteBuilder.lagerConsumer")
-                .log("we just received a lager on the STOMP endpoint");
+        from("mqtt:beer?host=tcp://localhost:1883&subscribeTopicName=beer.lager")
+                .routeId("org.apache.camel.examples.routes.MqttRouteBuilder.lagetConsumer")
+                .log("got a lager on the mqtt endpoint! whoohoo");
     }
 }
