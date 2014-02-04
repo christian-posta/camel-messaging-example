@@ -22,8 +22,18 @@ import org.apache.camel.builder.RouteBuilder;
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
 public class JmsRouteBuilder extends RouteBuilder {
+
     @Override
     public void configure() throws Exception {
 
+        from("timer:jmsTimer?period=5000")
+                .routeId("org.apache.camel.examples.JmsRouteBuilder.producer")
+                .setBody(constant("camel rocks jms!"))
+                .to("jms:topic:beer.lager").to("jms:queue:beer.ipa");
+
+
+        from("jms:topic:beer.lager")
+                .routeId("org.apache.camel.examples.JmsRouteBuilder.lagerConsumer")
+                .log("we just received a lager on the JMS endpoint");
     }
 }

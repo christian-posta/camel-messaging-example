@@ -24,6 +24,8 @@ import org.apache.camel.builder.RouteBuilder;
 public class MqttRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
+        from("mqtt:beer?host=tcp://localhost:1883&subscribeTopicName=beer.lager")
+                .routeId("org.apache.camel.examples.MqttRouteBuilder.lagetConsumer")
+                .log("got a lager on the mqtt endpoint! whoohoo");
     }
 }

@@ -16,17 +16,54 @@
  */
 package org.apache.camel.examples;
 
+import org.apache.activemq.broker.BrokerService;
+import org.apache.camel.builder.NotifyBuilder;
 import org.apache.camel.test.blueprint.CamelBlueprintTestSupport;
 import org.junit.Test;
+
+import java.io.File;
+import java.util.concurrent.TimeUnit;
 
 /**
  * @author <a href="http://www.christianposta.com/blog">Christian Posta</a>
  */
 public class BlueprintTest extends CamelBlueprintTestSupport {
 
+    BrokerService brokerService;
+
     @Test
     public void testMessaging() {
-        System.out.println("hi");
+        NotifyBuilder builder = new NotifyBuilder(context).whenCompleted(10).create();
+        builder.matches(60, TimeUnit.SECONDS);
+    }
+
+    @Override
+    public void setUp() throws Exception {
+        startBroker();
+        super.setUp();
+    }
+
+    @Override
+    public void tearDown() throws Exception {
+        super.tearDown();
+        stopBroker();
+    }
+
+    private void stopBroker() throws Exception {
+        this.brokerService.stop();
+        this.brokerService.waitUntilStopped();
+    }
+
+    private void startBroker() throws Exception {
+        this.brokerService = new BrokerService();
+        this.brokerService.setDeleteAllMessagesOnStartup(true);
+        this.brokerService.getPersistenceAdapter().setDirectory(new File("./target/activemq-data"));
+        brokerService.addConnector("tcp://localhost:61616");
+        brokerService.addConnector("mqtt://localhost:1883");
+        brokerService.addConnector("stomp://localhost:61613");
+        brokerService.addConnector("amqp://localhost:5672");
+        brokerService.start();
+        brokerService.waitUntilStarted();
     }
 
     @Override

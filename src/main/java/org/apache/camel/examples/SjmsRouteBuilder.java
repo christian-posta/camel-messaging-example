@@ -24,6 +24,8 @@ import org.apache.camel.builder.RouteBuilder;
 public class SjmsRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
-
+        from("sjms:topic:beer.lager")
+                .routeId("org.apache.camel.examples.SjmsRouteBuilder.lagerConsumer")
+                .log("we just received a lager on the Simple JMS endpoint!!");
     }
 }
