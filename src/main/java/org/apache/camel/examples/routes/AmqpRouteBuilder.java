@@ -25,7 +25,7 @@ public class AmqpRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("amqp:queue:beer.ipa")
-                .routeId("org.apache.camel.examples.routes.AmqpRouteBuilder.lagerConsumer")
-                .log("we got an IPA on the AMQP endpoint! I'm gonna drink it!");
+                .routeId("AmqpRouteBuilder.lagerConsumer")
+                .log("we got an IPA on the AMQP endpoint! I'm gonna drink it: ${body}");
     }
 }

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<features name="camel-messaging-example-repo" xmlns="http://karaf.apache.org/xmlns/features/v1.0.0">
+    <feature name="camel-messaging-example" version="${project.version}">
+        <feature>camel-core</feature>
+        <feature>camel-mqtt</feature>
+        <feature>camel-amqp</feature>
+        <feature>camel-stomp</feature>
+        <feature>camel-jms</feature>
+        <feature>camel-sjms</feature>
+        <bundle>mvn:org.apache.camel.examples/camel-messaging-example/1.0-SNAPSHOT</bundle>
+    </feature>
+</features>

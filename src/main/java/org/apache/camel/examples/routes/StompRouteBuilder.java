@@ -25,7 +25,7 @@ public class StompRouteBuilder extends RouteBuilder {
     @Override
     public void configure() throws Exception {
         from("stomp:topic:beer.lager?brokerURL=tcp://localhost:61613")
-                .routeId("org.apache.camel.examples.routes.StompRouteBuilder.lagerConsumer")
-                .log("we just received a lager on the STOMP endpoint");
+                .routeId("StompRouteBuilder.lagerConsumer")
+                .log("we just received a lager on the STOMP endpoint : ${body}");
     }
 }
